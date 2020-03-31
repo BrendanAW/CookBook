@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="451.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="cookbook.ui.Controller">
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <Menu fx:id="englishMenu" text="File">
+                <MenuItem mnemonicParsing="false" onAction="#showAddRecipeDialog" text="Add"/>
+                <MenuItem onAction="#showUpdateRecipeDialog" text="Edit"/>
+                <MenuItem onAction="#showDeleteRecipeDialog" text="Delete"/>
+                <MenuItem onAction="#updateRecipesFromServer" text="Update"/>
+                <MenuItem onAction="#updateServerWithRecipes" text="Update Server"/>
+                <MenuItem fx:id="tableLanguageSwitch" onAction="#setTablePolish" text="Polish"/>
+            </Menu>
+            <Menu fx:id="polishMenu" text="Plik" visible="false">
+                <MenuItem mnemonicParsing="false" onAction="#showAddRecipeDialog" text="Dodaj"/>
+                <MenuItem onAction="#showUpdateRecipeDialog" text="Edituj"/>
+                <MenuItem onAction="#showDeleteRecipeDialog" text="Usunać"/>
+                <MenuItem onAction="#updateServerWithRecipes" text="Wysłać na serwer"/>
+                <MenuItem onAction="#updateRecipesFromServer" text="Aktualizacja"/>
+                <MenuItem onAction="#setTablePolish" text="Angielski"/>
+            </Menu>
+        </MenuBar>
+    </top>
+    <center>
+        <TabPane fx:id="recipe" maxHeight="Infinity" maxWidth="Infinity" prefHeight="396.0" prefWidth="372.0"
+                 tabClosingPolicy="UNAVAILABLE">
+            <Tab fx:id="ingredientsTab" text="Ingredients">
+                <AnchorPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="180.0" prefWidth="200.0">
+                    <TextArea fx:id="ingredients" editable="false" maxHeight="Infinity" maxWidth="Infinity"
+                              minHeight="-Infinity" minWidth="-Infinity" prefHeight="${recipe.height}"
+                              prefWidth="${recipe.width}" wrapText="true">
+                    </TextArea>
+                </AnchorPane>
+            </Tab>
+            <Tab fx:id="instructionsTab" text="Instructions">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <TextArea fx:id="instructions" editable="false" maxHeight="Infinity" maxWidth="Infinity"
+                              prefHeight="${recipe.height}" prefWidth="${recipe.width}" wrapText="true"/>
+                </AnchorPane>
+            </Tab>
+        </TabPane>
+    </center>
+    <left>
+        <VBox prefHeight="375.0" prefWidth="151.0" BorderPane.alignment="BOTTOM_CENTER">
+            <TableView fx:id="recipeNames" maxHeight="Infinity" prefWidth="151.0" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="recipeColumn" prefWidth="${recipeNames.width}" text="Recipes">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="name"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                </columnResizePolicy>
+            </TableView>
+            <ComboBox fx:id="searchBar" editable="true" onAction="#searchForRecipe" onKeyPressed="#searchForRecipes"
+                      prefWidth="150.0" promptText="Search"/>
+        </VBox>
+    </left>
+</BorderPane>

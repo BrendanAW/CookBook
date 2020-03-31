@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+    id 'org.beryx.jlink' version '2.12.0'
+}
+
+group 'recipes'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'org.xerial', name:'sqlite-jdbc', version: '3.8.11.2'
+}
+
+javafx {
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+    version = '11.0.2'
+}
+
+mainClassName = 'cookbook.ui.Main'
+
+jlink {
+    options = ['--strip-debug', 'compress', '2', '--no-header-files', '--no-man-pages']
+    launcher {
+        name = 'CookBookG'
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'cookbook.ui.Main'
+    }
+    from{
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it)}
+    }
+}
